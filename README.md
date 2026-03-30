@@ -4,10 +4,10 @@ A modular, object-oriented firmware for an ESP32-based RC car. This project uses
 
 ## Features
 
-* [cite_start]**Smooth Acceleration:** Implements a software-based acceleration curve (0.2 step) and a faster deceleration curve (0.3 step) for realistic handling[cite: 3, 22].
-* [cite_start]**Dynamic Speed Profiles:** Three toggleable speed modes (Level 1-3) with maximum speed limits (15%, 30%, 45%)[cite: 8, 9, 10].
-* [cite_start]**Variable Steering Geometry:** Switch between "Standard" (45°-135°) and "Wide" (0°-180°) steering angles on the fly[cite: 14, 15, 16].
-* [cite_start]**Visual Feedback:** The controller's LED changes color based on the selected speed mode (Green, Blue, or Red)[cite: 9, 10, 11].
+* [cite_start]**Smooth Acceleration:** Implements a software-based acceleration curve (0.2 step) and a faster deceleration curve (0.3 step) for realistic handling
+* [cite_start]**Dynamic Speed Profiles:** Three toggleable speed modes (Level 1-3) with maximum speed limits (15%, 30%, 45%).
+* [cite_start]**Variable Steering Geometry:** Switch between "Standard" (45°-135°) and "Wide" (0°-180°) steering angles on the fly.
+* [cite_start]**Visual Feedback:** The controller's LED changes color based on the selected speed mode (Green, Blue, or Red).
 * **Object-Oriented Design:** Clean separation of concerns between motor driving, steering, and controller input.
 
 ---
@@ -15,7 +15,7 @@ A modular, object-oriented firmware for an ESP32-based RC car. This project uses
 ## Hardware Configuration
 
 ### Pin Mapping
-[cite_start]The project is configured with the following ESP32 pins[cite: 2]:
+[cite_start]The project is configured with the following ESP32 pins:
 
 | Component | Pin | Function |
 | :--- | :--- | :--- |
@@ -32,30 +32,30 @@ A modular, object-oriented firmware for an ESP32-based RC car. This project uses
 
 ## 🎮 Controller Mapping
 
-[cite_start]Once connected, the gamepad controls the car as follows[cite: 4]:
+[cite_start]Once connected, the gamepad controls the car as follows:
 
 | Input | Action |
 | :--- | :--- |
-| **Right Trigger** | [cite_start]Drive Forward (Brake input in code) [cite: 18, 21] |
-| **Left Trigger** | [cite_start]Drive Backward (Throttle input in code) [cite: 18, 20] |
+| **Right Trigger** | [cite_start]Drive Forward (Brake input in code) |
+| **Left Trigger** | [cite_start]Drive Backward (Throttle input in code) |
 | **Left Joystick (X)**| [cite_start]Steering [cite: 26] |
-| **Triangle Button** | [cite_start]Cycle Speed Modes (1 → 2 → 3) [cite: 7] |
-| **Cross (X) Button** | [cite_start]Toggle Steering Mode (Standard vs. Wide) [cite: 13] |
-| **R1 Button** | [cite_start]Reset Steering to Center (90°) [cite: 26] |
+| **Triangle Button** | [cite_start]Cycle Speed Modes (1 → 2 → 3) |
+| **Cross (X) Button** | [cite_start]Toggle Steering Mode (Standard vs. Wide) |
+| **R1 Button** | [cite_start]Reset Steering to Center (90°) |
 
 ### Speed Modes & Indicators
-* **Mode 1:** 15% Max Speed | [cite_start]**Green LED** [cite: 8, 9]
-* **Mode 2:** 30% Max Speed | **Blue LED** [cite: 9, 10]
-* **Mode 3:** 45% Max Speed | [cite_start]**Red LED** [cite: 10, 11]
+* **Mode 1:** 15% Max Speed | **Green LED**
+* **Mode 2:** 30% Max Speed | **Blue LED**
+* **Mode 3:** 45% Max Speed | **Red LED**
 
 ---
 
 ## Logic Flow
 
-1.  [cite_start]**Input Processing:** The `BP32.update()` function polls the controller[cite: 6].
-2.  [cite_start]**Target Calculation:** The triggers determine the `targetSpeed` based on the current `maxSpeedLimit`[cite: 19, 20].
-3.  [cite_start]**Smoothing:** The `currentSpeed` incrementally approaches the `targetSpeed` every loop to prevent mechanical stress[cite: 21, 22].
-4.  [cite_start]**Steering:** The joystick value is mapped to the current `steer_left` and `steer_right` constraints[cite: 26].
+1.  [cite_start]**Input Processing:** The `BP32.update()` function polls the controller.
+2.  [cite_start]**Target Calculation:** The triggers determine the `targetSpeed` based on the current `maxSpeedLimit`.
+3.  [cite_start]**Smoothing:** The `currentSpeed` incrementally approaches the `targetSpeed` every loop to prevent mechanical stress.
+4.  [cite_start]**Steering:** The joystick value is mapped to the current `steer_left` and `steer_right` constraints.
 
 ## Dependencies
 
