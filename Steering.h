@@ -1,46 +1,35 @@
 #ifndef STEERING_H
 #define STEERING_H
 
-#pragma once
-
 #include <Arduino.h>
-#include <Servo.h>
-#include <PS4Controller.h>
-
-Servo steeringServo;
+#include <ESP32Servo.h>
 
 class Steering {
-public: 
+public:
     Steering(uint8_t pin) : _pin(pin) {}
 
     void begin() {
-        steeringServo.attach(_pin);
-        steeringServo.write(90);
+        _servo.attach(_pin);
+        _servo.write(90);
     }
 
-    void turnLeft(int joystickValue) {
-        if(PS4.isConnected() && joystickValue < -15) {
-            int angle = map(joystickValue, -15, -127, 0, 90);
-            steeringServo.write(90 - angle);
-        }    
-    }
-
-    void turnRight(int joystickValue) {
-        if(PS4.isConnected() && joystickValue > 15) {
-            int angle = map(joystickValue, 15, 127, 0, 90);
-            steeringServo.write(90 + angle);
+    void turn(int joystickValue, int minAngle, int maxAngle) {
+        if (abs(joystickValue) < 25) {
+            _servo.write(90);
+            return;
         }
+
+        int angle = map(joystickValue, -512, 512, minAngle, maxAngle);
+        _servo.write(angle);
     }
 
-    void reset(int controllerValue) {
-        if(PS4.isConnected() && controllerValue > 100) {
-            steeringServo.write(90);
-        }
+    void reset() {
+        _servo.write(90);
     }
 
 private:
     uint8_t _pin;
-
+    Servo _servo;
 };
 
-#endif // STEERING_H
+#endif
