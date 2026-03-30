@@ -10,7 +10,7 @@
 
 Maxon motor(DIR, PWMA, PWMB);
 Steering steeringservo(SERVO_PIN);
-ControllerBP gamepad;
+Controller gamepad;
 
 int steerMode = 0;
 int speedMode = 2;
