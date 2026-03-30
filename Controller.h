@@ -1,5 +1,5 @@
-#ifndef CONTROLLER_BP_H
-#define CONTROLLER_BP_H
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
 
 #include <Bluepad32.h>
 
@@ -10,7 +10,7 @@
 
 class Controller {
 public:
-    ControllerBP() : controller(nullptr) {}
+    Controller() : controller(nullptr) {}
 
     void setController(ControllerPtr ctl) {
         controller = ctl;
