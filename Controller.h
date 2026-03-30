@@ -1,48 +1,67 @@
-#ifndef CONTROLLER_H
-#define CONTROLLER_H
+#ifndef CONTROLLER_BP_H
+#define CONTROLLER_BP_H
 
-#include <PS4Controller.h>
+#include <Bluepad32.h>
 
-#pragma once
-
-char macAddress[18] = "00:00:00:00:00:00"; // Replace with your PS4 controller's MAC address
+#define BUTTON_TRIANGLE 0x0008
+#define BUTTON_R1 0x0020
+#define BUTTON_L1 0x0010
+#define BUTTON_X 0x0001
 
 class Controller {
-public: Controller() {}
+public:
+    ControllerBP() : controller(nullptr) {}
 
-    void begin() {
-        if(PS4.begin(macAddress)) {
-            Serial.println("Connected to PS4 controller");
-        } else {
-            Serial.println("Failed to connect to PS4 controller");
-            return;
-        }
+    void setController(ControllerPtr ctl) {
+        controller = ctl;
+    }
+
+    void clearController() {
+        controller = nullptr;
+    }
+
+    bool isConnected() {
+        return (controller != nullptr && controller->isConnected());
     }
 
     int getLeftJoystickX() {
-        if(PS4.isConnected()) {
-            return PS4.LStickX();
-        } else {
-            return 0;
-        }
-    }
-
-    int getRightJoystickY() {
-        if(PS4.isConnected()) {
-            return PS4.RStickY();
-        } else {
-            return 0;
-        }
-
+        if (!isConnected()) return 0;
+        return controller->axisX();
     }
 
     int getRightTrigger() {
-        if(PS4.isConnected()) {
-            return PS4.R2();
+        if (!isConnected()) return 0;
+        return controller->throttle(); 
+    }
+
+    int getLeftTrigger() {
+        if (!isConnected()) return 0;
+        return controller->brake();
+    }
+
+    bool getButtonR1() {
+        if (!isConnected()) return false;
+        return (controller->buttons() & BUTTON_R1) != 0;
+    }
+
+    bool getButtonTriangle() {
+        if (!isConnected()) return false;
+        return (controller->buttons() & BUTTON_TRIANGLE) != 0;
+    }
+
+    bool getButtonX() {
+        if (!isConnected()) return false;
+        return (controller->buttons() & BUTTON_X) != 0;
+    }
+
+    void setLED(uint8_t r, uint8_t g, uint8_t b) {
+        if (isConnected()) {
+            controller->setColorLED(r, g, b);
         }
     }
-private:
 
+private:
+    ControllerPtr controller;
 };
 
-#endif // CONTROLLER_H
+#endif
